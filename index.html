@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keepitclean | Limpieza Profesional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#1A3C5A',
+                            accent: '#4FD1C5',
+                            light: '#F8F9FA',
+                            text: '#2D3748'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: #F8F9FA;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-bg {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 1.5rem;
+            overflow: hidden;
+        }
+        
+        @media (min-width: 1024px) {
+            .hero-bg {
+                padding: 0 6rem;
+            }
+        }
+
+        .hero-pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('Imagenes/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 60, 90, 0.88) 0%, rgba(26, 60, 90, 0.82) 50%, rgba(26, 60, 90, 0.90) 100%);
+            z-index: 2;
+        }
+
+        .hero-text-glow {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 60%;
+            height: 70%;
+            transform: translateY(-50%);
+            background: radial-gradient(ellipse at center, rgba(26, 60, 90, 0.4) 0%, transparent 70%);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* MENU MOVIL */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: rgba(26, 60, 90, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 60;
+            transition: right 0.3s ease;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 55;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* DASHBOARD CARDS MOVIL */
+        .dashboard-cards {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .service-section {
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .service-image {
+            position: absolute;
+            right: -10%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60%;
+            height: 80%;
+            object-fit: cover;
+            opacity: 0.8;
+            mask-image: linear-gradient(to left, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to left, black 50%, transparent 100%);
+            transition: transform 0.5s ease-out;
+        }
+
+        @media (max-width: 1024px) {
+            .service-image {
+                width: 100%;
+                right: 0;
+                opacity: 0.15;
+                mask-image: linear-gradient(to top, black 30%, transparent 100%);
+                -webkit-mask-image: linear-gradient(to top, black 30%, transparent 100%);
+            }
+        }
+
+        .ba-slider {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        @media (min-width: 768px) {
+            .ba-slider {
+                height: 400px;
+            }
+        }
+        
+        .ba-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        .ba-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            border-right: 2px solid white;
+            z-index: 10;
+        }
+        .ba-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: ew-resize;
+            z-index: 20;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .nav-scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .nav-scrolled a {
+            color: #1A3C5A !important;
+        }
+        .nav-scrolled .logo-text {
+            color: #1A3C5A !important;
+        }
+        
+        .nav-scrolled .hamburger-line {
+            background-color: #1A3C5A !important;
+        }
+
+        /* === ESTILOS PARA EL LOGO === */
+
+        /* Logo en hero con glow sutil */
+        .hero-logo-img {
+            filter: drop-shadow(0 0 15px rgba(79, 209, 197, 0.3));
+            transition: all 0.3s ease;
+        }
+        .hero-logo-img:hover {
+            filter: drop-shadow(0 0 25px rgba(79, 209, 197, 0.5));
+            transform: scale(1.02);
+        }
+
+        /* Logo en navbar con transición suave */
+        .nav-logo-img {
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        /* Cuando navbar hace scroll, ajustar logo */
+        .nav-scrolled .nav-logo-img {
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            height: 3.5rem; /* 56px */
+        }
+        @media (min-width: 768px) {
+            .nav-scrolled .nav-logo-img {
+                height: 4.5rem; /* 72px */
+            }
+        }
+        @media (min-width: 1024px) {
+            .nav-scrolled .nav-logo-img {
+                height: 5rem; /* 80px */
+            }
+        }
+
+        /* Logo en footer */
+        .footer-logo-img {
+            transition: all 0.3s ease;
+        }
+        .footer-logo-img:hover {
+            opacity: 1;
+            filter: drop-shadow(0 0 10px rgba(79, 209, 197, 0.4));
+        }
+
+        /* Responsive: logo más grande en móvil del hero */
+        @media (max-width: 768px) {
+            .hero-logo-img {
+                height: 5rem; /* 80px */
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="text-brand-text antialiased">
+
+    <!-- OVERLAY PARA MENU MOVIL -->
+    <div class="mobile-menu-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+
+    <!-- MENU MOVIL -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="flex justify-between items-center mb-8">
+            <span class="text-white text-xl font-bold">Menú</span>
+            <button onclick="closeMobileMenu()" class="text-white text-2xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <a href="#home" onclick="closeMobileMenu()" class="text-white text-lg font-medium py-3 border-b border-white/20 hover:text-brand-accent transition-colors">Inicio</a>
+        <a href="#servicios" onclick="closeMobileMenu()" class="text-white text-lg font-medium py-3 border-b border-white/20 hover:text-brand-accent transition-colors">Servicios</a>
+        <a href="#galeria" onclick="closeMobileMenu()" class="text-white text-lg font-medium py-3 border-b border-white/20 hover:text-brand-accent transition-colors">Galería</a>
+        <a href="#contacto" onclick="closeMobileMenu()" class="text-white text-lg font-medium py-3 border-b border-white/20 hover:text-brand-accent transition-colors">Contacto</a>
+        
+        <a href="https://wa.me/3121652309" target="_blank" class="mt-4 bg-brand-accent text-brand-dark px-6 py-3 rounded-full font-bold text-center flex items-center justify-center gap-2">
+            <i class="fa-brands fa-whatsapp"></i> Cotizar por WhatsApp
+        </a>
+    </div>
+
+    <!-- NAVBAR -->
+<nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 px-6 lg:px-12 flex justify-between items-center text-white">
+    <div class="flex items-center">
+        <img src="logo.png" alt="Keepitclean Logo" class="h-16 w-auto md:h-20 lg:h-24 drop-shadow-lg nav-logo-img">
+    </div>
+        
+        <!-- Menu desktop -->
+        <div class="hidden md:flex gap-8 font-medium">
+            <a href="#home" class="hover:text-brand-accent transition-colors">Inicio</a>
+            <a href="#servicios" class="hover:text-brand-accent transition-colors">Servicios</a>
+            <a href="#galeria" class="hover:text-brand-accent transition-colors">Galería</a>
+            <a href="#contacto" class="hover:text-brand-accent transition-colors">Contacto</a>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <!-- Boton WhatsApp desktop -->
+            <a href="https://wa.me/3121652309" target="_blank" class="hidden md:flex bg-brand-accent text-brand-dark px-6 py-2 rounded-full font-bold hover:bg-white transition-colors shadow-lg items-center gap-2">
+                <i class="fa-brands fa-whatsapp"></i> Cotizar
+            </a>
+            
+            <!-- Boton hamburguesa movil -->
+            <button onclick="openMobileMenu()" class="md:hidden text-2xl focus:outline-none">
+                <div class="flex flex-col gap-1.5">
+                    <span class="hamburger-line block w-6 h-0.5 bg-white transition-all"></span>
+                    <span class="hamburger-line block w-6 h-0.5 bg-white transition-all"></span>
+                    <span class="hamburger-line block w-6 h-0.5 bg-white transition-all"></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <section id="home" class="hero-bg text-white relative">
+        <div class="hero-pattern-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-text-glow"></div>
+
+        <div class="hero-content max-w-4xl pt-20 lg:pt-0">
+            <!-- Logo grande en hero -->
+            <div class="mb-8 reveal">
+                <img src="logo.png" alt="Keepitclean" class="h-28 md:h-40 lg:h-48 w-auto drop-shadow-2xl hero-logo-img">
+            </div>
+
+            <h1 class="text-4xl md:text-7xl lg:text-8xl font-extrabold mb-6 leading-tight drop-shadow-lg">
+                Tu hogar <br>
+                <span class="text-brand-accent">como nuevo.</span>
+            </h1>
+            <p class="text-lg md:text-2xl text-gray-100 mb-8 max-w-2xl font-light drop-shadow-md">
+                Especialistas en higienización profunda de muebles, colchones y vehículos. 
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#servicios" class="bg-brand-accent text-brand-dark px-6 md:px-8 py-3 md:py-4 rounded-full font-bold text-base md:text-lg hover:bg-white transition-all transform hover:scale-105 shadow-xl text-center">
+                    Ver Servicios
+                </a>
+                <a href="#contacto" class="border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-bold text-base md:text-lg hover:bg-white hover:text-brand-dark transition-all text-center backdrop-blur-sm">
+                    Contáctanos
+                </a>
+            </div>
+        </div>
+
+        <!-- DASHBOARD CARDS - VISIBLE EN TODOS LOS DISPOSITIVOS -->
+        <div class="dashboard-cards px-4 pb-8 lg:absolute lg:bottom-10 lg:right-6 lg:right-24 lg:w-96">
+            <div class="grid grid-cols-2 gap-3 md:gap-4">
+                <div class="bg-white/10 backdrop-blur-md p-4 md:p-6 rounded-2xl border border-white/20 reveal">
+                    <i class="fa-solid fa-couch text-brand-accent text-2xl md:text-3xl mb-2"></i>
+                    <h3 class="font-bold text-sm md:text-lg">Muebles</h3>
+                    <p class="text-xs md:text-sm text-gray-300">Limpieza profunda</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md p-4 md:p-6 rounded-2xl border border-white/20 reveal" style="transition-delay: 100ms;">
+                    <i class="fa-solid fa-spray-can-sparkles text-brand-accent text-2xl md:text-3xl mb-2"></i>
+                    <h3 class="font-bold text-sm md:text-lg">Desinfección</h3>
+                    <p class="text-xs md:text-sm text-gray-300">99.9% de bacterias</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md p-4 md:p-6 rounded-2xl border border-white/20 reveal" style="transition-delay: 200ms;">
+                    <i class="fa-solid fa-car text-brand-accent text-2xl md:text-3xl mb-2"></i>
+                    <h3 class="font-bold text-sm md:text-lg">Vehículos</h3>
+                    <p class="text-xs md:text-sm text-gray-300">Asientos y alfombras</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md p-4 md:p-6 rounded-2xl border border-white/20 reveal" style="transition-delay: 300ms;">
+                    <i class="fa-solid fa-shield-halved text-brand-accent text-2xl md:text-3xl mb-2"></i>
+                    <h3 class="font-bold text-sm md:text-lg">Teflón</h3>
+                    <p class="text-xs md:text-sm text-gray-300">Protección duradera</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios" class="relative bg-brand-dark">
+        
+        <!-- Servicio 1: Muebles -->
+        <div class="service-section bg-brand-dark text-white px-6">
+            <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6">Lavado de <br>Muebles</h2>
+                    <p class="text-base md:text-xl text-gray-300 mb-6 md:mb-8 leading-relaxed">
+                        Eliminamos ácaros, manchas y olores profundos de tus sillones, sofás, sillas de comedor y más. Utilizamos productos biodegradables que cuidan de tus muebles.
+                    </p>
+                    <ul class="space-y-2 md:space-y-3 text-gray-400 text-sm md:text-base">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-accent"></i> Secado en un par de horas</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-accent"></i> Químicos biodegradables</li>
+                    </ul>
+                </div>
+            </div>
+            <img src="Imagenes/sillon.jpg" class="service-image" alt="Sillon limpio">
+        </div>
+
+        <!-- Servicio 2: Colchones -->
+        <div class="service-section bg-[#152d45] text-white px-6">
+            <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6">Limpieza de <br>Colchones</h2>
+                    <p class="text-base md:text-xl text-gray-300 mb-6 md:mb-8 leading-relaxed">
+                        Duerme tranquilo con colchón limpio. Eliminamos bacterias y ácaros que causan alergias.
+                    </p>
+                </div>
+            </div>
+            <img src="Imagenes/colchon.jpg" class="service-image" alt="Colchon limpio">
+        </div>
+
+        <!-- Servicio 3: Alfombras/Tapetes -->
+        <div class="service-section bg-brand-dark text-white px-6">
+            <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6">Alfombras & <br>Tapetes</h2>
+                    <p class="text-base md:text-xl text-gray-300 mb-6 md:mb-8 leading-relaxed">
+                        Dale nueva vida a tus alfombras. Remoción de manchas difíciles y olores de mascotas.
+                    </p>
+                </div>
+            </div>
+            <img src="Imagenes/alfombra.jpg" class="service-image" alt="Alfombra limpia">
+        </div>
+
+        <!-- Servicio 4: Vehiculos -->
+        <div class="service-section bg-[#152d45] text-white px-6">
+            <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6">Interiores de <br>Vehículos</h2>
+                    <p class="text-base md:text-xl text-gray-300 mb-6 md:mb-8 leading-relaxed">
+                        Limpieza de tapicería de autos, asientos y alfombras. Eliminamos manchas de comida, bebidas, olores a tabaco y de mascotas.
+                    </p>
+                </div>
+            </div>
+            <img src="Imagenes/auto.jpg" class="service-image" alt="Auto limpio">
+        </div>
+
+        <!-- Servicio 5: Desinfeccion -->
+        <div class="service-section bg-brand-dark text-white px-6">
+            <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6">Desinfección <br>Profunda</h2>
+                    <p class="text-base md:text-xl text-gray-300 mb-6 md:mb-8 leading-relaxed">
+                        Sanitización con productos certificados. Ideal para oficinas, espacios comerciales y el hogar.
+                    </p>
+                </div>
+            </div>
+            <img src="Imagenes/desinfeccion.jpg" class="service-image" alt="Desinfeccion">
+        </div>
+
+        <!-- Servicio 6: Teflon -->
+        <div class="service-section bg-[#152d45] text-white px-6">
+            <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6">Aplicación de <br>Teflón</h2>
+                    <p class="text-base md:text-xl text-gray-300 mb-6 md:mb-8 leading-relaxed">
+                        Protege tus muebles y alfombras contra derrames y manchas futuras. Capa invisible de protección duradera.
+                    </p>
+                </div>
+            </div>
+            <img src="Imagenes/teflon.jpg" class="service-image" alt="Proteccion teflon">
+        </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section id="galeria" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-12 md:mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl lg:text-6xl font-bold text-brand-dark mb-4">Resultados que <span class="text-brand-accent">hablan</span></h2>
+                <p class="text-gray-500 text-base md:text-lg">Desliza para ver la magia de la limpieza profesional.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                <div class="ba-slider reveal" id="slider1">
+                    <div class="ba-image" style="background-image: url('Imagenes/despues1.jpg');"></div>
+                    <div class="ba-overlay">
+                        <div class="ba-image" style="background-image: url('Imagenes/antes1.jpg'); width: 200%;"></div>
+                    </div>
+                    <div class="ba-handle">
+                        <i class="fa-solid fa-arrows-left-right text-brand-dark"></i>
+                    </div>
+                    <div class="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm font-bold z-30 pointer-events-none">ANTES</div>
+                    <div class="absolute top-4 right-4 bg-brand-accent/90 text-brand-dark px-3 py-1 rounded text-sm font-bold z-30 pointer-events-none">DESPUÉS</div>
+                </div>
+
+                <div class="ba-slider reveal" id="slider2">
+                    <div class="ba-image" style="background-image: url('Imagenes/despues2.jpg');"></div>
+                    <div class="ba-overlay">
+                        <div class="ba-image" style="background-image: url('Imagenes/antes2.jpg'); width: 200%;"></div>
+                    </div>
+                    <div class="ba-handle">
+                        <i class="fa-solid fa-arrows-left-right text-brand-dark"></i>
+                    </div>
+                    <div class="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm font-bold z-30 pointer-events-none">ANTES</div>
+                    <div class="absolute top-4 right-4 bg-brand-accent/90 text-brand-dark px-3 py-1 rounded text-sm font-bold z-30 pointer-events-none">DESPUÉS</div>
+                </div>
+                
+                <div class="ba-slider reveal" id="slider3">
+                    <div class="ba-image" style="background-image: url('Imagenes/despues3.jpg');"></div>
+                    <div class="ba-overlay">
+                        <div class="ba-image" style="background-image: url('Imagenes/antes3.jpg'); width: 200%;"></div>
+                    </div>
+                    <div class="ba-handle">
+                        <i class="fa-solid fa-arrows-left-right text-brand-dark"></i>
+                    </div>
+                    <div class="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm font-bold z-30 pointer-events-none">ANTES</div>
+                    <div class="absolute top-4 right-4 bg-brand-accent/90 text-brand-dark px-3 py-1 rounded text-sm font-bold z-30 pointer-events-none">DESPUÉS</div>
+                </div>
+
+                <div class="ba-slider reveal" id="slider4">
+                    <div class="ba-image" style="background-image: url('Imagenes/despues4.jpg');"></div>
+                    <div class="ba-overlay">
+                        <div class="ba-image" style="background-image: url('Imagenes/antes4.jpg'); width: 200%;"></div>
+                    </div>
+                    <div class="ba-handle">
+                        <i class="fa-solid fa-arrows-left-right text-brand-dark"></i>
+                    </div>
+                    <div class="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm font-bold z-30 pointer-events-none">ANTES</div>
+                    <div class="absolute top-4 right-4 bg-brand-accent/90 text-brand-dark px-3 py-1 rounded text-sm font-bold z-30 pointer-events-none">DESPUÉS</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="min-h-screen bg-brand-dark text-white flex flex-col justify-center items-center relative overflow-hidden px-4">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
+            <div class="absolute top-10 left-10 text-6xl md:text-9xl font-black">CLEAN</div>
+            <div class="absolute bottom-10 right-10 text-6xl md:text-9xl font-black">HOME</div>
+        </div>
+
+        <div class="container mx-auto px-4 md:px-6 relative z-10 text-center">
+            <h2 class="text-4xl md:text-7xl lg:text-9xl font-bold mb-6 md:mb-8 tracking-tighter reveal">
+                ¿Listo para <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-white">limpiar?</span>
+            </h2>
+            <p class="text-lg md:text-xl lg:text-2xl text-gray-300 mb-8 md:mb-12 max-w-2xl mx-auto reveal">
+                Escríbenos por WhatsApp o llámanos directamente. Cotización gratuita y al instante.
+            </p>
+
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 reveal">
+                <a href="https://wa.me/3121652309" target="_blank" class="group relative px-6 md:px-8 py-3 md:py-4 bg-brand-accent text-brand-dark font-bold text-lg md:text-xl rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_20px_rgba(79,209,197,0.5)] w-full md:w-auto text-center">
+                    <span class="relative z-10 flex items-center justify-center gap-3">
+                        <i class="fa-brands fa-whatsapp text-xl md:text-2xl"></i> WhatsApp
+                    </span>
+                </a>
+                
+                <a href="tel:+3121652309" class="group px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-bold text-lg md:text-xl rounded-full hover:bg-white hover:text-brand-dark transition-all flex items-center justify-center gap-3 w-full md:w-auto">
+                    <i class="fa-solid fa-phone"></i> Llamar Ahora
+                </a>
+            </div>
+
+            <div class="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-left max-w-4xl mx-auto border-t border-white/20 pt-8 md:pt-12 reveal">
+                <div>
+                    <h4 class="text-brand-accent font-bold mb-2">Teléfono</h4>
+                    <p class="text-gray-300">+52 312 165 2309</p>
+                </div>
+                <div>
+                    <h4 class="text-brand-accent font-bold mb-2">Horario</h4>
+                    <p class="text-gray-300">Lun - Sáb: 8:00 AM - 5:00 PM</p>
+                </div>
+                <div>
+                    <h4 class="text-brand-accent font-bold mb-2">Email</h4>
+                    <p class="text-gray-300">hola@keepitclean.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#0f1f2e] text-white/40 py-8 md:py-12 text-center text-sm px-4">
+        <div class="flex flex-col items-center gap-4 mb-6">
+            <img src="logo.png" alt="Keepitclean" class="h-20 md:h-24 w-auto opacity-60 footer-logo-img">
+        </div>
+        <p> Keepitclean. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // MENU MOVIL
+        function openMobileMenu() {
+            document.getElementById('mobileMenu').classList.add('active');
+            document.getElementById('mobileOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('active');
+            document.getElementById('mobileOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // NAVBAR SCROLL
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+                navbar.classList.remove('text-white');
+                navbar.classList.add('text-brand-dark');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+                navbar.classList.add('text-white');
+                navbar.classList.remove('text-brand-dark');
+            }
+        });
+
+        // SCROLL REVEAL
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+            
+            reveals.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // BEFORE/AFTER SLIDER
+        const initSlider = (sliderId) => {
+            const slider = document.getElementById(sliderId);
+            if(!slider) return;
+            
+            const overlay = slider.querySelector('.ba-overlay');
+            const handle = slider.querySelector('.ba-handle');
+            const imgOverlay = slider.querySelector('.ba-overlay .ba-image');
+            let isDragging = false;
+
+            const updateSlider = (x) => {
+                const rect = slider.getBoundingClientRect();
+                let percentage = ((x - rect.left) / rect.width) * 100;
+                percentage = Math.max(0, Math.min(100, percentage));
+                overlay.style.width = `${percentage}%`;
+                handle.style.left = `${percentage}%`;
+                imgOverlay.style.width = `${rect.width}px`;
+            };
+
+            handle.addEventListener('mousedown', () => isDragging = true);
+            window.addEventListener('mouseup', () => isDragging = false);
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                updateSlider(e.clientX);
+            });
+
+            handle.addEventListener('touchstart', () => isDragging = true);
+            window.addEventListener('touchend', () => isDragging = false);
+            window.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                updateSlider(e.touches[0].clientX);
+            });
+            
+            slider.addEventListener('click', (e) => {
+                updateSlider(e.clientX);
+            });
+
+            const rect = slider.getBoundingClientRect();
+            imgOverlay.style.width = `${rect.width}px`;
+        };
+
+        ['slider1', 'slider2', 'slider3', 'slider4'].forEach(id => initSlider(id));
+        
+        window.addEventListener('resize', () => {
+             ['slider1', 'slider2', 'slider3', 'slider4'].forEach(id => initSlider(id));
+        });
+    </script>
+</body>
+</html>
