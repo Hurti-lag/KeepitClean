@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keepitclean | Limpieza Profesional</title>
+
+    <!-- PRELOAD CRÍTICO: Hero y Logo -->
+    <link rel="preload" as="image" href="Imagenes/hero-bg.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="logo.png" fetchpriority="high">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -53,7 +58,7 @@
             padding: 0 1.5rem;
             overflow: hidden;
         }
-        
+
         @media (min-width: 1024px) {
             .hero-bg {
                 padding: 0 6rem;
@@ -117,11 +122,11 @@
             flex-direction: column;
             gap: 2rem;
         }
-        
+
         .mobile-menu.active {
             right: 0;
         }
-        
+
         .mobile-menu-overlay {
             position: fixed;
             top: 0;
@@ -134,7 +139,7 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
-        
+
         .mobile-menu-overlay.active {
             opacity: 1;
             visibility: visible;
@@ -157,7 +162,7 @@
             justify-content: center;
             overflow: hidden;
         }
-        
+
         .service-image {
             position: absolute;
             right: -10%;
@@ -190,13 +195,13 @@
             border-radius: 1rem;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        
+
         @media (min-width: 768px) {
             .ba-slider {
                 height: 400px;
             }
         }
-        
+
         .ba-image {
             position: absolute;
             top: 0;
@@ -248,14 +253,12 @@
         .nav-scrolled .logo-text {
             color: #1A3C5A !important;
         }
-        
+
         .nav-scrolled .hamburger-line {
             background-color: #1A3C5A !important;
         }
 
         /* === ESTILOS PARA EL LOGO === */
-
-        /* Logo en hero con glow sutil */
         .hero-logo-img {
             filter: drop-shadow(0 0 15px rgba(79, 209, 197, 0.3));
             transition: all 0.3s ease;
@@ -265,29 +268,26 @@
             transform: scale(1.02);
         }
 
-        /* Logo en navbar con transición suave */
         .nav-logo-img {
             transition: all 0.3s ease;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
-        /* Cuando navbar hace scroll, ajustar logo */
         .nav-scrolled .nav-logo-img {
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-            height: 3.5rem; /* 56px */
+            height: 3.5rem;
         }
         @media (min-width: 768px) {
             .nav-scrolled .nav-logo-img {
-                height: 4.5rem; /* 72px */
+                height: 4.5rem;
             }
         }
         @media (min-width: 1024px) {
             .nav-scrolled .nav-logo-img {
-                height: 5rem; /* 80px */
+                height: 5rem;
             }
         }
 
-        /* Logo en footer */
         .footer-logo-img {
             transition: all 0.3s ease;
         }
@@ -296,13 +296,13 @@
             filter: drop-shadow(0 0 10px rgba(79, 209, 197, 0.4));
         }
 
-        /* Responsive: logo más grande en móvil del hero */
         @media (max-width: 768px) {
             .hero-logo-img {
-                height: 5rem; /* 80px */
+                height: 5rem;
             }
         }
     </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body class="text-brand-text antialiased">
@@ -322,18 +322,18 @@
         <a href="#servicios" onclick="closeMobileMenu()" class="text-white text-lg font-medium py-3 border-b border-white/20 hover:text-brand-accent transition-colors">Servicios</a>
         <a href="#galeria" onclick="closeMobileMenu()" class="text-white text-lg font-medium py-3 border-b border-white/20 hover:text-brand-accent transition-colors">Galería</a>
         <a href="#contacto" onclick="closeMobileMenu()" class="text-white text-lg font-medium py-3 border-b border-white/20 hover:text-brand-accent transition-colors">Contacto</a>
-        
+
         <a href="https://wa.me/3121652309" target="_blank" class="mt-4 bg-brand-accent text-brand-dark px-6 py-3 rounded-full font-bold text-center flex items-center justify-center gap-2">
             <i class="fa-brands fa-whatsapp"></i> Cotizar por WhatsApp
         </a>
     </div>
 
     <!-- NAVBAR -->
-<nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 px-6 lg:px-12 flex justify-between items-center text-white">
-    <div class="flex items-center">
-        <img src="logo.png" alt="Keepitclean Logo" class="h-16 w-auto md:h-20 lg:h-24 drop-shadow-lg nav-logo-img">
-    </div>
-        
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 px-6 lg:px-12 flex justify-between items-center text-white">
+        <div class="flex items-center">
+            <img src="logo.png" alt="Keepitclean Logo" width="200" height="80" class="h-16 w-auto md:h-20 lg:h-24 drop-shadow-lg nav-logo-img" fetchpriority="high">
+        </div>
+
         <!-- Menu desktop -->
         <div class="hidden md:flex gap-8 font-medium">
             <a href="#home" class="hover:text-brand-accent transition-colors">Inicio</a>
@@ -341,14 +341,12 @@
             <a href="#galeria" class="hover:text-brand-accent transition-colors">Galería</a>
             <a href="#contacto" class="hover:text-brand-accent transition-colors">Contacto</a>
         </div>
-        
+
         <div class="flex items-center gap-4">
-            <!-- Boton WhatsApp desktop -->
             <a href="https://wa.me/3121652309" target="_blank" class="hidden md:flex bg-brand-accent text-brand-dark px-6 py-2 rounded-full font-bold hover:bg-white transition-colors shadow-lg items-center gap-2">
                 <i class="fa-brands fa-whatsapp"></i> Cotizar
             </a>
-            
-            <!-- Boton hamburguesa movil -->
+
             <button onclick="openMobileMenu()" class="md:hidden text-2xl focus:outline-none">
                 <div class="flex flex-col gap-1.5">
                     <span class="hamburger-line block w-6 h-0.5 bg-white transition-all"></span>
@@ -366,9 +364,8 @@
         <div class="hero-text-glow"></div>
 
         <div class="hero-content max-w-4xl pt-20 lg:pt-0">
-            <!-- Logo grande en hero -->
             <div class="mb-8 reveal">
-                <img src="logo.png" alt="Keepitclean" class="h-28 md:h-40 lg:h-48 w-auto drop-shadow-2xl hero-logo-img">
+                <img src="logo.png" alt="Keepitclean" width="300" height="120" class="h-28 md:h-40 lg:h-48 w-auto drop-shadow-2xl hero-logo-img" fetchpriority="high">
             </div>
 
             <h1 class="text-4xl md:text-7xl lg:text-8xl font-extrabold mb-6 leading-tight drop-shadow-lg">
@@ -388,7 +385,7 @@
             </div>
         </div>
 
-        <!-- DASHBOARD CARDS - VISIBLE EN TODOS LOS DISPOSITIVOS -->
+        <!-- DASHBOARD CARDS -->
         <div class="dashboard-cards px-4 pb-8 lg:absolute lg:bottom-10 lg:right-6 lg:right-24 lg:w-96">
             <div class="grid grid-cols-2 gap-3 md:gap-4">
                 <div class="bg-white/10 backdrop-blur-md p-4 md:p-6 rounded-2xl border border-white/20 reveal">
@@ -417,7 +414,7 @@
 
     <!-- SERVICIOS -->
     <section id="servicios" class="relative bg-brand-dark">
-        
+
         <!-- Servicio 1: Muebles -->
         <div class="service-section bg-brand-dark text-white px-6">
             <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
@@ -432,7 +429,7 @@
                     </ul>
                 </div>
             </div>
-            <img src="Imagenes/sillon.jpg" class="service-image" alt="Sillon limpio">
+            <img src="Imagenes/sillon.jpg" width="800" height="600" class="service-image" alt="Sillon limpio" loading="lazy">
         </div>
 
         <!-- Servicio 2: Colchones -->
@@ -445,7 +442,7 @@
                     </p>
                 </div>
             </div>
-            <img src="Imagenes/colchon.jpg" class="service-image" alt="Colchon limpio">
+            <img src="Imagenes/colchon.jpg" width="800" height="600" class="service-image" alt="Colchon limpio" loading="lazy">
         </div>
 
         <!-- Servicio 3: Alfombras/Tapetes -->
@@ -458,7 +455,7 @@
                     </p>
                 </div>
             </div>
-            <img src="Imagenes/alfombra.jpg" class="service-image" alt="Alfombra limpia">
+            <img src="Imagenes/alfombra.jpg" width="800" height="600" class="service-image" alt="Alfombra limpia" loading="lazy">
         </div>
 
         <!-- Servicio 4: Vehiculos -->
@@ -471,7 +468,7 @@
                     </p>
                 </div>
             </div>
-            <img src="Imagenes/auto.jpg" class="service-image" alt="Auto limpio">
+            <img src="Imagenes/auto.jpg" width="800" height="600" class="service-image" alt="Auto limpio" loading="lazy">
         </div>
 
         <!-- Servicio 5: Desinfeccion -->
@@ -484,7 +481,7 @@
                     </p>
                 </div>
             </div>
-            <img src="Imagenes/desinfeccion.jpg" class="service-image" alt="Desinfeccion">
+            <img src="Imagenes/desinfeccion.jpg" width="800" height="600" class="service-image" alt="Desinfeccion" loading="lazy">
         </div>
 
         <!-- Servicio 6: Teflon -->
@@ -497,7 +494,7 @@
                     </p>
                 </div>
             </div>
-            <img src="Imagenes/teflon.jpg" class="service-image" alt="Proteccion teflon">
+            <img src="Imagenes/teflon.jpg" width="800" height="600" class="service-image" alt="Proteccion teflon" loading="lazy">
         </div>
     </section>
 
@@ -533,7 +530,7 @@
                     <div class="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm font-bold z-30 pointer-events-none">ANTES</div>
                     <div class="absolute top-4 right-4 bg-brand-accent/90 text-brand-dark px-3 py-1 rounded text-sm font-bold z-30 pointer-events-none">DESPUÉS</div>
                 </div>
-                
+
                 <div class="ba-slider reveal" id="slider3">
                     <div class="ba-image" style="background-image: url('Imagenes/despues3.webp');"></div>
                     <div class="ba-overlay">
@@ -582,7 +579,7 @@
                         <i class="fa-brands fa-whatsapp text-xl md:text-2xl"></i> WhatsApp
                     </span>
                 </a>
-                
+
                 <a href="tel:3121652309" class="group px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-bold text-lg md:text-xl rounded-full hover:bg-white hover:text-brand-dark transition-all flex items-center justify-center gap-3 w-full md:w-auto">
                     <i class="fa-solid fa-phone"></i> Llamar Ahora
                 </a>
@@ -603,7 +600,7 @@
 
     <footer class="bg-[#0f1f2e] text-white/40 py-8 md:py-12 text-center text-sm px-4">
         <div class="flex flex-col items-center gap-4 mb-6">
-            <img src="logo.png" alt="Keepitclean" class="h-20 md:h-24 w-auto opacity-60 footer-logo-img">
+            <img src="logo.png" alt="Keepitclean" width="200" height="80" class="h-20 md:h-24 w-auto opacity-60 footer-logo-img" loading="lazy">
         </div>
         <p> Keepitclean. Todos los derechos reservados.</p>
     </footer>
@@ -641,7 +638,7 @@
         const revealOnScroll = () => {
             const windowHeight = window.innerHeight;
             const elementVisible = 100;
-            
+
             reveals.forEach((reveal) => {
                 const elementTop = reveal.getBoundingClientRect().top;
                 if (elementTop < windowHeight - elementVisible) {
@@ -656,7 +653,7 @@
         const initSlider = (sliderId) => {
             const slider = document.getElementById(sliderId);
             if(!slider) return;
-            
+
             const overlay = slider.querySelector('.ba-overlay');
             const handle = slider.querySelector('.ba-handle');
             const imgOverlay = slider.querySelector('.ba-overlay .ba-image');
@@ -684,7 +681,7 @@
                 if (!isDragging) return;
                 updateSlider(e.touches[0].clientX);
             });
-            
+
             slider.addEventListener('click', (e) => {
                 updateSlider(e.clientX);
             });
@@ -694,7 +691,7 @@
         };
 
         ['slider1', 'slider2', 'slider3', 'slider4'].forEach(id => initSlider(id));
-        
+
         window.addEventListener('resize', () => {
              ['slider1', 'slider2', 'slider3', 'slider4'].forEach(id => initSlider(id));
         });
